@@ -48,6 +48,13 @@
   @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.12)}30%{transform:scale(1)}45%{transform:scale(1.08)}}
   @keyframes ring{from{transform:scale(1);opacity:.8}to{transform:scale(2.1);opacity:0}}
   #gate p{margin-top:38px;color:var(--mut);font-size:.8rem;letter-spacing:.3em;text-transform:uppercase}
+  #wait{display:none}
+  #gate.wait #open,#gate.wait #gateHint{display:none}
+  #gate.wait #wait{display:block}
+  #gate.wait h1{margin-bottom:30px}
+  .wrow{display:flex;gap:10px;justify-content:center}
+  .wline{margin:34px auto 0;max-width:420px;font-size:clamp(1.3rem,4.8vw,1.7rem);line-height:1.3;color:#ffe9f1;min-height:2.7em;transition:opacity .8s}
+  #gate #wait .wlock{margin-top:22px;color:var(--mut);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase}
   #skip{position:fixed;right:18px;bottom:18px;z-index:31;background:none;border:1px solid var(--line);color:var(--mut);padding:8px 16px;border-radius:30px;font:inherit;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;display:none}
 
   #cap{position:fixed;left:0;right:0;bottom:15vh;z-index:29;margin:0 auto;max-width:660px;padding:0 28px;text-align:center;pointer-events:none;
@@ -247,10 +254,20 @@
 <div id="bar"></div>
 
 <div id="gate">
-  <div class="eyebrow">a little universe, made only for</div>
+  <div class="eyebrow" id="gateTag">a little universe, made only for</div>
   <h1 class="grad" id="gateName"></h1>
   <button id="open" aria-label="Open">♥</button>
-  <p>tap the heart</p>
+  <p id="gateHint">tap the heart</p>
+  <div id="wait">
+    <div class="wrow">
+      <div class="unit"><b id="wd">0</b><span>days</span></div>
+      <div class="unit"><b id="wh">00</b><span>hours</span></div>
+      <div class="unit"><b id="wm">00</b><span>mins</span></div>
+      <div class="unit"><b id="ws">00</b><span>secs</span></div>
+    </div>
+    <div class="wline serif" id="wline"></div>
+    <div class="wlock">🔒 sealed until midnight</div>
+  </div>
 </div>
 <button id="skip">skip ›</button>
 <div id="cap" aria-live="polite"></div>
@@ -699,6 +716,36 @@ $("open").onclick = () => {
   if (songUnlocked()) playSong(false, true);
   if (calm) { document.documentElement.classList.remove("locked"); document.body.classList.add("on"); } else intro();
 };
+
+/* ---------- before her birthday: only a countdown, nothing else opens ---------- */
+if (!arrived()) {
+  const gate = $("gate"), teasers = [
+    "Something is being written in the stars for you.",
+    "No, you can't open it yet.",
+    "I know you're curious. That's the point.",
+    "Come back when the clock reaches zero.",
+    "It will be worth the wait. I promise."
+  ];
+  let ti = 0;
+  gate.classList.add("wait");
+  $("gateTag").textContent = "something is waiting for";
+  $("wline").textContent = teasers[0];
+  const rot = setInterval(() => {
+    const w = $("wline"); w.style.opacity = 0;
+    setTimeout(() => { w.textContent = teasers[++ti % teasers.length]; w.style.opacity = 1; }, 800);
+  }, 4500);
+  const wt = setInterval(() => {
+    const left = bday - new Date();
+    if (left <= 0) {
+      clearInterval(wt); clearInterval(rot);
+      gate.classList.remove("wait"); $("gateTag").textContent = "a little universe, made only for";
+      explode(20); pop($("open")); return;
+    }
+    const s = Math.floor(left / 1000);
+    $("wd").textContent = Math.floor(s / 86400); $("wh").textContent = pad(Math.floor(s % 86400 / 3600));
+    $("wm").textContent = pad(Math.floor(s % 3600 / 60)); $("ws").textContent = pad(s % 60);
+  }, 250);
+}
 
 /* ---------- finale: the heart ---------- */
 let finaleIn = false, done = false;
