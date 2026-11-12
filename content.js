@@ -87,11 +87,11 @@ const CONFIG = {
       reveal: "\"Nasini El Donya\". That is exactly what you do to me: with you, the whole world disappears, and only you remain.",
       // song: true = this card's button plays the site's song (see "song" below)
       song: true, link: "", linkText: "Play our song ♪" },
-    { icon: "🎁", title: "A hint about your gift", unlock: "2026-11-15T12:00",
+    { icon: "🎁", title: "A hint about your gift", unlock: "2026-11-15T00:00",
       hint: "No, I'm not telling you yet.",
       reveal: "Today we are going to get something you once asked me about. Do you remember what it was?",
       link: "", linkText: "" },
-    { icon: "📍", title: "Our first date", unlock: "2026-11-15T15:00",
+    { icon: "📍", title: "Our first date", unlock: "2026-11-15T00:00",
       hint: "Where are we going? You'll see.",
       reveal: "I'm still not telling you where. Just wear whatever you want. You will be the most beautiful one there anyway.",
       link: "", linkText: "" }
