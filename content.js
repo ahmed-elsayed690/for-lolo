@@ -84,7 +84,7 @@ const CONFIG = {
   surprises: [
     { icon: "🎵", title: "A song for you", unlock: "2026-11-15T00:00",
       hint: "The first thing I want you to hear on your birthday.",
-      reveal: "\"Nasini El Donya\". That is exactly what you do to me: with you, the whole world disappears, and only you remain.",
+      reveal: "\"Lovesong\", by Adele. I'm not good with words, so I borrowed hers. Listen closely: every line of it is me, talking to you.",
       // song: true = this card's button plays the site's song (see "song" below)
       song: true, link: "", linkText: "Play our song ♪" },
     { icon: "🎁", title: "A hint about your gift", unlock: "2026-11-15T00:00",
@@ -119,5 +119,5 @@ const CONFIG = {
   //   file:    an audio file you put in the "music" folder, e.g. "music/song.mp3"
   //            (most reliable, works on every phone). Leave "" to use YouTube.
   //   youtube: the video's ID (the part after "v=" in its link), used when file is "".
-  song: { file: "music/song.mp3", youtube: "RsNyLc7k6QQ" }
+  song: { file: "music/lovesong.mp3", youtube: "" }
 };
